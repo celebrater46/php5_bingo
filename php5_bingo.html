@@ -1,0 +1,115 @@
+<!-- ビンゴのルール
+B 00-15
+I 16-30
+N 31-45
+G 46-60
+O 61-75 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>PHP5_BINGO!</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>PHP5_BINGO</h1>
+
+  <h2>index.php</h2>
+  <pre>
+&lt;?php&lt;br&gt;<br>
+&lt;br&gt;<br>
+require_once(__DIR__ . &quot;/config.php&quot;);&lt;br&gt;<br>
+require_once(__DIR__ . &quot;/Bingo.php&quot;);&lt;br&gt;<br>
+&lt;br&gt;<br>
+$bingo = new \MyApp\Bingo();&lt;br&gt;<br>
+$nums = $bingo-&gt;create();&lt;br&gt;<br>
+&lt;br&gt;<br>
+/*&lt;br&gt;<br>
+$nums[][]&lt;br&gt;<br>
+B: $nums[0]&lt;br&gt;<br>
+I: $nums[1]&lt;br&gt;<br>
+..&lt;br&gt;<br>
+O: $nums[4]&lt;br&gt;<br>
+&lt;br&gt;<br>
+$nums[$i] $i * 15 + 1 ～ $i * 15 + 15&lt;br&gt;<br>
+*/&lt;br&gt;<br>
+&lt;br&gt;<br>
+&lt;br&gt;<br>
+// var_dump($nums);&lt;br&gt;<br>
+// exit;&lt;br&gt;<br>
+&lt;br&gt;<br>
+?&gt;&lt;br&gt;<br>
+&lt;br&gt;<br>
+&lt;!DOCTYPE html&gt;&lt;br&gt;<br>
+&lt;html lang=&quot;ja&quot;&gt;&lt;br&gt;<br>
+&lt;head&gt;&lt;br&gt;<br>
+  &lt;meta charset=&quot;utf-8&quot;&gt;&lt;br&gt;<br>
+  &lt;title&gt;BINGO!&lt;/title&gt;&lt;br&gt;<br>
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;&lt;br&gt;<br>
+&lt;/head&gt;&lt;br&gt;<br>
+&lt;body&gt;&lt;br&gt;<br>
+  &lt;div id=&quot;container&quot;&gt;&lt;br&gt;<br>
+    &lt;table&gt;&lt;br&gt;<br>
+      &lt;tr&gt;&lt;br&gt;<br>
+        &lt;th&gt;B&lt;/th&gt;&lt;br&gt;<br>
+        &lt;th&gt;I&lt;/th&gt;&lt;br&gt;<br>
+        &lt;th&gt;N&lt;/th&gt;&lt;br&gt;<br>
+        &lt;th&gt;G&lt;/th&gt;&lt;br&gt;<br>
+        &lt;th&gt;O&lt;/th&gt;&lt;br&gt;<br>
+      &lt;/tr&gt;&lt;br&gt;<br>
+      &lt;?php for ($i = 0; $i &lt; 5; $i++) : ?&gt;&lt;br&gt;<br>
+      &lt;tr&gt;&lt;br&gt;<br>
+        &lt;?php for ($j = 0; $j &lt; 5; $j++) : ?&gt;&lt;br&gt;<br>
+        &lt;td&gt;&lt;?= h($nums[$j][$i]); ?&gt;&lt;/td&gt;&lt;br&gt;<br>
+        &lt;?php endfor; ?&gt;&lt;br&gt;<br>
+      &lt;/tr&gt;&lt;br&gt;<br>
+      &lt;?php endfor; ?&gt;&lt;br&gt;<br>
+    &lt;/table&gt;&lt;br&gt;<br>
+  &lt;/div&gt;&lt;br&gt;<br>
+&lt;/body&gt;&lt;br&gt;<br>
+&lt;/html&gt;&lt;br&gt;<br>
+<br>    
+  </pre>
+
+  <h2>Bingo.php</h2>
+  <pre>
+&lt;?php<br>
+<br>
+namespace MyApp;<br>
+<br>
+class Bingo {<br>
+  public function create() {<br>
+    $nums = [];<br>
+<br>
+    for ($i = 0; $i &lt; 5; $i++) {<br>
+      $col = range($i * 15 + 1, $i * 15 + 15);<br>
+      shuffle($col);<br>
+      $nums[$i] = array_slice($col, 0, 5);<br>
+    }<br>
+<br>
+    $nums[2][2] = &quot;FREE&quot;;<br>
+    return $nums;<br>
+  }<br>
+}<br>
+  </pre>
+
+  <h2>config.php</h2>
+  <pre>
+&lt;?php<br>
+<br>
+ini_set(&quot;display_errors&quot;, 1); // エラーのチェックがしやすくなる。<br>
+<br>
+// require(__DIR__ . &quot;/functions.php&quot;);<br>
+require_once(__DIR__ . &quot;/functions.php&quot;); // require_once の方がいい！<br>
+  </pre>
+
+  <h2>function.php</h2>
+  <pre>
+    &lt;?php<br>
+<br>
+function h($s) {<br>
+  return htmlspecialchars($s, ENT_QUOTES, &quot;UTF-8&quot;);<br>
+}<br>
+  </pre>
+</body>
+</html>
